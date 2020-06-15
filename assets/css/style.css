@@ -1,0 +1,41 @@
+h1 {
+    font-size: 45px;
+}
+
+.main-section{
+    text-align: left;
+    width: 50%;
+    margin: 0 auto;
+}
+.answer-item {
+    background-color: rebeccapurple;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 5px;
+    display: flex;
+    font-size: x-large;
+}
+
+.answer-list {
+    text-align: left;
+    display: inline-block;
+    padding-left: 0px;
+}
+
+.purp-btn {
+    background-color: rebeccapurple;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+#view-scores {
+    color: rebeccapurple;
+}
+
+.reaction{
+    color: gray;
+    /*border-top: 1px solid gray;*/
+    padding-top: 10px;
+}
