@@ -2,6 +2,7 @@ var score = 0;
 var scoreCounter = 0;
 var count = 0;
 var time_left = 60;
+var scoreView = document.getElementById("view-scores");
 var questionSpot = document.getElementById("main-title");
 var start = document.getElementById("start-quiz");
 var choiceListEl = document.getElementById("answer-list"); 
@@ -90,7 +91,7 @@ function startQuiz(){
     //debugger;
     start.setAttribute("style", "display: none");
     descrip.setAttribute("style", "display: none");
-    countdown_timer.setAttribute("style", "inline-block");
+    countdown_timer.setAttribute("style", "display: inline-block");
 
     
     displayQuestion(count);
@@ -116,6 +117,27 @@ function startQuiz(){
     }
     , 1000
     );    
+}
+
+function displayScores(){
+    main_section.setAttribute("style", "text-align: left");
+    choiceListEl.setAttribute("style", "display: inline-block");
+    start.setAttribute("style", "display: none");
+    descrip.setAttribute("style", "display: none");
+    time_left = 0;
+//    formEl.setAttribute("style", "display: inline-block");
+    choiceListEl.setAttribute("style", "display: none");
+    countdown_timer.setAttribute("style", "display: none");
+
+    questionSpot.textContent = "High Scores"
+        descrip.setAttribute("style", "display: none");
+        formEl.setAttribute("style", "display: none");
+        submitScoreBtn.setAttribute("style", "display: none");
+        goBackBtn.textContent = "Go back";
+        clearScoreBtn.textContent = "Clear High Scores";
+        goBackBtn.setAttribute("style", "display: inline-block");
+        clearScoreBtn.setAttribute("style", "display: inline-block");
+        scoreList.setAttribute("style", "display: block");    
 }
 
 function displayMessage(){
@@ -166,7 +188,6 @@ var createScore = function(scoreObj){
    scoreObj.id = scoreCounter;
     highScoreList.push(scoreObj);
     saveScore();
-    console.log("just saved score and increasing counter from "+scoreCounter + " to -> "+ (scoreCounter+1));
     scoreCounter++;
 }
 
@@ -175,17 +196,12 @@ function loadScores(){
     if(!savedScores){
         return false;
     }
-    console.log("returning savedscores as an object from stored string");
     savedScores = JSON.parse(savedScores);
     
-    console.dir(savedScores);
     // loop through saved scores
     for(var i = 0; i< savedScores.length; i++){
-        console.log("ID: " + savedScores[i].id + " " + "user is "+ savedScores[i].name + " with a score of "+ savedScores[i].score);
-        console.log("running createScore function with savedScores[i]")
         createScore(savedScores[i]);
     }
-    console.log("looped through existing scores and increased scoreCounter to allow for next ID to be loaded for the next score")
     scoreCounter++;
 }
 
@@ -223,4 +239,5 @@ submitScoreBtn.addEventListener("click", function(event){
 });
 goBackBtn.addEventListener("click", startOver);
 clearScoreBtn.addEventListener("click", deleteScore);
+scoreView.addEventListener("click", displayScores);
 loadScores();
