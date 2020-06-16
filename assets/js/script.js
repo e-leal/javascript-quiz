@@ -121,16 +121,14 @@ function startQuiz(){
 
 function displayScores(){
     main_section.setAttribute("style", "text-align: left");
-    choiceListEl.setAttribute("style", "display: inline-block");
     start.setAttribute("style", "display: none");
     descrip.setAttribute("style", "display: none");
     time_left = 0;
     choiceListEl.setAttribute("style", "display: none");
     countdown_timer.setAttribute("style", "display: none");
-
     questionSpot.textContent = "High Scores"
-        descrip.setAttribute("style", "display: none");
-        formEl.setAttribute("style", "display: none");
+    
+    formEl.setAttribute("style", "display: none");
         submitScoreBtn.setAttribute("style", "display: none");
         goBackBtn.textContent = "Go back";
         clearScoreBtn.textContent = "Clear High Scores";
@@ -229,7 +227,7 @@ submitScoreBtn.addEventListener("click", function(event){
         goBackBtn.setAttribute("style", "display: inline-block");
         clearScoreBtn.setAttribute("style", "display: inline-block");
         scoreList.setAttribute("style", "display: block");
-        var user = formEl.querySelector("#initials").value;
+        var user = formEl.querySelector("#initials").value.toUpperCase();
         var profile = {
             id: scoreCounter,
             name: user,

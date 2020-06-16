@@ -1,3 +1,6 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
 h1 {
     font-size: 45px;
 }
@@ -15,6 +18,7 @@ h1 {
     margin: 5px;
     display: flex;
     font-size: x-large;
+    text-shadow: 2px 2px 4px #000000;
 }
 
 .answer-item:hover{
@@ -71,4 +75,8 @@ h1 {
 
 .high-scores{
     display: inline-block;
+}
+
+.description{
+    font-size: 20px;
 }
