@@ -13,6 +13,12 @@ var goBackBtn = document.getElementById("backToStart");
 var clearScoreBtn = document.getElementById("resetScores");
 var submitScoreBtn = document.getElementById("submitHighScoreBtn");
 var formEl = document.querySelector("#userProf");
+var err = document.getElementById("message");
+var orig_description = "Try to answer the following code related questions in the time alloted. Keep in mind that incorrect answers will penalize your score and time.";
+var highScoreList = [];
+
+
+
 
 var questions = [
     {
@@ -35,7 +41,7 @@ var questions = [
 function displayQuestion(questionId){
     questionSpot.textContent = questions[questionId].q;
     main_section.setAttribute("style", "text-align: left");
-
+    choiceListEl.setAttribute("style", "display: inline-block");
     var choiceList = questions[questionId].c;
     for (var j = 0; j < choiceList.length; j++){
         if(document.querySelector(".answer-item[data-option-id='"+ (j+1)+ "']") === null){
@@ -86,13 +92,14 @@ function verifyAnswer(){
 
 function startQuiz(){
     //debugger;
-    questionSpot.setAttribute("style", "")
     start.setAttribute("style", "display: none");
     descrip.setAttribute("style", "display: none");
+    countdown_timer.setAttribute("style", "inline-block");
+
     
     displayQuestion(count);
     var timeInterval = setInterval(function(){
-        countdown_timer.textContent = time_left;
+        countdown_timer.textContent = "Time: " + time_left;
         time_left--;
         if(response.textContent != ""){
             response.textContent = "";
@@ -108,31 +115,45 @@ function startQuiz(){
             submitScoreBtn.textContent = "Submit";
             submitScoreBtn.setAttribute("style", "display: inline-block");
             choiceListEl.setAttribute("style", "display: none");
+            countdown_timer.setAttribute("style", "display: none");
         }
     }
     , 1000
     );    
 }
 
+function displayMessage(){
+    err.textContent = "Please enter initials";
+    err.setAttribute("style", "color: red; font-weight: bold");
+}
 
 
+
+var startOver = function (){
+    score = 0;
+    time_left = 60;
+    count = 0;
+    questionSpot.textContent = "Coding Quiz Challenge";
+    descrip.textContent = orig_description;
+    descrip.setAttribute("style", "display: block");
+    goBackBtn.setAttribute("style", "display: none");
+    clearScoreBtn.setAttribute("style", "display: none");
+    start.setAttribute("style", "display: inline-block; text-align: center");
+    main_section.setAttribute("style", "text-align: center");
+}
 
 
 start.addEventListener("click", startQuiz);
 selectedChoice.addEventListener("click", verifyAnswer);
 submitScoreBtn.addEventListener("click", function(event){
     event.preventDefault();
-    console.log("event triggered");
-
-    if(formEl.querySelector("input").value === null){
-        var error = document.createElement("h3");
-        error.textContent = "Please enter initials";
-        error.setAttribute("style", "color: red; font-weight: bold");
-        formEl.appendChild(error);
+    var userInitial = formEl.querySelector("#initials").value;
+    if(userInitial === null || userInitial === ""){
+        displayMessage();       
     }
     else{
-        if(error){
-            error.setAttribute("style", "display: none");
+        if(err.textContent != ""){
+            err.setAttribute("style", "display: none");
         }
         questionSpot.textContent = "High Scores"
         descrip.setAttribute("style", "display: none");
@@ -142,5 +163,6 @@ submitScoreBtn.addEventListener("click", function(event){
         clearScoreBtn.textContent = "Clear High Scores";
         goBackBtn.setAttribute("style", "display: inline-block");
         clearScoreBtn.setAttribute("style", "display: inline-block");
-    }    
+    } 
 });
+goBackBtn.addEventListener("click", startOver);

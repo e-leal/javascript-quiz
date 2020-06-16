@@ -8,7 +8,7 @@
 </head>
 <body>
     <p class="high-scores" id="view-scores">View High Scores</p>
-    <p class="countdown" id="timer">secs</p>
+    <p class="countdown" id="timer"></p>
     <main class="main-section">
         <h1 class="title" id="main-title">Coding Quiz Challenge</h1>
         <p class="description" id="description">Try to answer the following code related questions in the time alloted. Keep in mind that incorrect answers will penalize your score and time.</p>
@@ -18,8 +18,10 @@
         <form id="userProf" class="invisible">
             <label for="initials">Enter Initials: </label>
             <input type="text" name="initials" id="initials" />
+            <button type="submit" class="purp-btn invisible" id="submitHighScoreBtn"></button>
+            <h3 id="message"></h3>
         </form>
-        <button type="submit" class="purp-btn invisible" id="submitHighScoreBtn"></button>
+        
         <button class="purp-btn invisible" type="menu" id="backToStart"></button>
         <button class="purp-btn invisible" type="reset" id="resetScores"></button>
         <h2 class="reaction" id="reaction"></h2>
