@@ -1,4 +1,5 @@
 var score = 0;
+var scoreCounter = 0;
 var count = 0;
 var time_left = 60;
 var questionSpot = document.getElementById("main-title");
@@ -14,6 +15,7 @@ var clearScoreBtn = document.getElementById("resetScores");
 var submitScoreBtn = document.getElementById("submitHighScoreBtn");
 var formEl = document.querySelector("#userProf");
 var err = document.getElementById("message");
+var scoreList = document.getElementById("score-list");
 var orig_description = "Try to answer the following code related questions in the time alloted. Keep in mind that incorrect answers will penalize your score and time.";
 var highScoreList = [];
 
@@ -49,19 +51,13 @@ function displayQuestion(questionId){
             choice.className = "answer-item";
             choice.setAttribute("data-option-id", (j+1));
             choice.textContent = (j + 1) + ". " + choiceList[j];
-            console.log(choiceList[j]);
             choice.setAttribute("value", choiceList[j]); 
-            console.log("the new value is "+ choice.value);
-            console.dir(choice);
             choiceListEl.appendChild(choice);
         }
         else{
             var currentChoice = document.querySelector(".answer-item[data-option-id='"+ (j+1)+ "']");
             currentChoice.textContent = (j+1) + ". " + choiceList[j];
-            console.log(choiceList[j]);
-            currentChoice.setAttribute("value", choiceList[j]);
-            console.dir(currentChoice);
-            
+            currentChoice.setAttribute("value", choiceList[j]);            
         }
         
         
@@ -140,6 +136,54 @@ var startOver = function (){
     clearScoreBtn.setAttribute("style", "display: none");
     start.setAttribute("style", "display: inline-block; text-align: center");
     main_section.setAttribute("style", "text-align: center");
+    scoreList.setAttribute("style", "display: none");
+}
+
+function saveScore(){
+    localStorage.setItem("highScoreList", JSON.stringify(highScoreList));
+}
+
+var createScore = function(scoreObj){
+    var savedEntry = document.createElement("li");
+    savedEntry.className = "score";
+    savedEntry.setAttribute("data-score-id", scoreCounter);
+    console.log("object ID is: " + scoreObj.id);
+    console.log("score counter is at: " + scoreCounter);
+    console.dir(savedEntry);
+    console.dir(scoreObj);
+    //var scoreDiv = document.createElement("div");
+    savedEntry.textContent= (scoreCounter + 1) + ". " + scoreObj.name + " - " + scoreObj.score;
+    scoreList.appendChild(savedEntry);
+   scoreObj.id = scoreCounter;
+    highScoreList.push(scoreObj);
+    saveScore();
+    console.log("just saved score and increasing counter from "+scoreCounter + " to -> "+ (scoreCounter+1));
+    scoreCounter++;
+        // savedEntry.textContent = savedScores[i].name + " - " + savedScores[i].score;
+}
+
+function loadScores(){
+    scoreList.setAttribute("style", "display: block");
+    var savedScores = localStorage.getItem("highScoreList");
+    if(!savedScores){
+        return false;
+    }
+    console.log("returning savedscores as an object from stored string");
+    savedScores = JSON.parse(savedScores);
+    
+    console.dir(savedScores);
+    // loop through saved scores
+    for(var i = 0; i< savedScores.length; i++){
+        console.log("ID: " + savedScores[i].id + " " + "user is "+ savedScores[i].name + " with a score of "+ savedScores[i].score);
+        console.log("running createScore function with savedScores[i]")
+        createScore(savedScores[i]);
+        // var savedEntry = document.createElement("li");
+        // savedEntry.className = "score";
+        // savedEntry.textContent = savedScores[i].name + " - " + savedScores[i].score;
+        // scoreList.appendChild(savedEntry);
+    }
+    console.log("looped through existing scores and increased scoreCounter to allow for next ID to be loaded for the next score")
+    scoreCounter++;
 }
 
 
@@ -163,6 +207,21 @@ submitScoreBtn.addEventListener("click", function(event){
         clearScoreBtn.textContent = "Clear High Scores";
         goBackBtn.setAttribute("style", "display: inline-block");
         clearScoreBtn.setAttribute("style", "display: inline-block");
+        scoreList.setAttribute("style", "display: block");
+        var user = formEl.querySelector("#initials").value;
+        var profile = {
+            id: scoreCounter,
+            name: user,
+            score: score
+        }
+        createScore(profile);
+        // console.log("pushing profile object into highscorelist");
+        // highScoreList.push(profile);
+        // console.dir(highScoreList);
+        // console.log("calling SaveScore function");
+        // saveScore();
+        // console.log("calling loadscore function");
+        // loadScores();
     } 
 });
 goBackBtn.addEventListener("click", startOver);
