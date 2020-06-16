@@ -151,17 +151,16 @@ function deleteScore(){
             selectedScore.remove();
         }
     }
+    var updatedScoreArr = [];
+    highScoreList = updatedScoreArr;
     scoreCounter = 0;
+    saveScore();
 }
 
 var createScore = function(scoreObj){
     var savedEntry = document.createElement("li");
     savedEntry.className = "score";
     savedEntry.setAttribute("data-score-id", scoreCounter);
-    console.log("object ID is: " + scoreObj.id);
-    console.log("score counter is at: " + scoreCounter);
-    console.dir(savedEntry);
-    console.dir(scoreObj);
     savedEntry.textContent= (scoreCounter + 1) + ". " + scoreObj.name + " - " + scoreObj.score;
     scoreList.appendChild(savedEntry);
    scoreObj.id = scoreCounter;
@@ -172,7 +171,6 @@ var createScore = function(scoreObj){
 }
 
 function loadScores(){
-    //scoreList.setAttribute("style", "display: block");
     var savedScores = localStorage.getItem("highScoreList");
     if(!savedScores){
         return false;

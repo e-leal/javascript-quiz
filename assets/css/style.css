@@ -17,6 +17,10 @@ h1 {
     font-size: x-large;
 }
 
+.answer-item:hover{
+    background-color: fuchsia;
+}
+
 .answer-list {
     text-align: left;
     display: inline-block;
@@ -31,7 +35,7 @@ h1 {
 }
 
 .purp-btn:hover{
-    background-color: purple;
+    background-color: fuchsia;
 }
 
 #view-scores {
