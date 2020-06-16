@@ -143,6 +143,17 @@ function saveScore(){
     localStorage.setItem("highScoreList", JSON.stringify(highScoreList));
 }
 
+function deleteScore(){
+    if(highScoreList != null || highScoreList.length > 0){
+        for(var i = 0; i< highScoreList.length; i++){
+            var scoreId = highScoreList[i].id;
+            var selectedScore = document.querySelector(".score[data-score-id='"+scoreId+"']");
+            selectedScore.remove();
+        }
+    }
+    scoreCounter = 0;
+}
+
 var createScore = function(scoreObj){
     var savedEntry = document.createElement("li");
     savedEntry.className = "score";
@@ -151,7 +162,6 @@ var createScore = function(scoreObj){
     console.log("score counter is at: " + scoreCounter);
     console.dir(savedEntry);
     console.dir(scoreObj);
-    //var scoreDiv = document.createElement("div");
     savedEntry.textContent= (scoreCounter + 1) + ". " + scoreObj.name + " - " + scoreObj.score;
     scoreList.appendChild(savedEntry);
    scoreObj.id = scoreCounter;
@@ -159,11 +169,10 @@ var createScore = function(scoreObj){
     saveScore();
     console.log("just saved score and increasing counter from "+scoreCounter + " to -> "+ (scoreCounter+1));
     scoreCounter++;
-        // savedEntry.textContent = savedScores[i].name + " - " + savedScores[i].score;
 }
 
 function loadScores(){
-    scoreList.setAttribute("style", "display: block");
+    //scoreList.setAttribute("style", "display: block");
     var savedScores = localStorage.getItem("highScoreList");
     if(!savedScores){
         return false;
@@ -177,10 +186,6 @@ function loadScores(){
         console.log("ID: " + savedScores[i].id + " " + "user is "+ savedScores[i].name + " with a score of "+ savedScores[i].score);
         console.log("running createScore function with savedScores[i]")
         createScore(savedScores[i]);
-        // var savedEntry = document.createElement("li");
-        // savedEntry.className = "score";
-        // savedEntry.textContent = savedScores[i].name + " - " + savedScores[i].score;
-        // scoreList.appendChild(savedEntry);
     }
     console.log("looped through existing scores and increased scoreCounter to allow for next ID to be loaded for the next score")
     scoreCounter++;
@@ -215,13 +220,9 @@ submitScoreBtn.addEventListener("click", function(event){
             score: score
         }
         createScore(profile);
-        // console.log("pushing profile object into highscorelist");
-        // highScoreList.push(profile);
-        // console.dir(highScoreList);
-        // console.log("calling SaveScore function");
-        // saveScore();
-        // console.log("calling loadscore function");
-        // loadScores();
+        scoreList.setAttribute("style", "display: block");
     } 
 });
 goBackBtn.addEventListener("click", startOver);
+clearScoreBtn.addEventListener("click", deleteScore);
+loadScores();
