@@ -7,6 +7,7 @@ var choiceListEl = document.getElementById("answer-list");
 var response = document.getElementById("reaction");
 var selectedChoice = document.querySelector(".answer-list");
 var descrip = document.getElementById("description");
+var countdown_timer = document.getElementById("timer");
 var questions = [
     {
         q: "Arrays in javascript can be used to store _____.",
@@ -80,8 +81,10 @@ function startQuiz(){
     questionSpot.setAttribute("style", "")
     start.setAttribute("style", "display: none");
     descrip.setAttribute("style", "display: none");
+    
     displayQuestion(count);
     var timeInterval = setInterval(function(){
+        countdown_timer.textContent = time_left;
         time_left--;
         if(response.textContent != ""){
             response.textContent = "";
