@@ -52,13 +52,15 @@ h1 {
     display: none;
 }
 
-.score-list{
+/* .score-list{
     background-color: plum;
-}
+} */
 
 .score{
     margin: 5px 10px;
     padding: 5px 10px;
+    background-color: plum;
+    list-style: none;
 }
 
 .countdown {

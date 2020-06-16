@@ -125,7 +125,6 @@ function displayScores(){
     start.setAttribute("style", "display: none");
     descrip.setAttribute("style", "display: none");
     time_left = 0;
-//    formEl.setAttribute("style", "display: inline-block");
     choiceListEl.setAttribute("style", "display: none");
     countdown_timer.setAttribute("style", "display: none");
 
@@ -137,7 +136,10 @@ function displayScores(){
         clearScoreBtn.textContent = "Clear High Scores";
         goBackBtn.setAttribute("style", "display: inline-block");
         clearScoreBtn.setAttribute("style", "display: inline-block");
-        scoreList.setAttribute("style", "display: block");    
+        if(highScoreList.length > 0){
+            scoreList.setAttribute("style", "display: block");
+        }
+            
 }
 
 function displayMessage(){
