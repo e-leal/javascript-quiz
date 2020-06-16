@@ -8,6 +8,12 @@ var response = document.getElementById("reaction");
 var selectedChoice = document.querySelector(".answer-list");
 var descrip = document.getElementById("description");
 var countdown_timer = document.getElementById("timer");
+var main_section = document.querySelector(".main-section");
+var goBackBtn = document.getElementById("backToStart");
+var clearScoreBtn = document.getElementById("resetScores");
+var submitScoreBtn = document.getElementById("submitHighScoreBtn");
+var formEl = document.querySelector("#userProf");
+
 var questions = [
     {
         q: "Arrays in javascript can be used to store _____.",
@@ -28,6 +34,8 @@ var questions = [
 
 function displayQuestion(questionId){
     questionSpot.textContent = questions[questionId].q;
+    main_section.setAttribute("style", "text-align: left");
+
     var choiceList = questions[questionId].c;
     for (var j = 0; j < choiceList.length; j++){
         if(document.querySelector(".answer-item[data-option-id='"+ (j+1)+ "']") === null){
@@ -92,18 +100,47 @@ function startQuiz(){
         }
         if(count >= questions.length || time_left <= 0){
             clearInterval(timeInterval);
+            questionSpot.textContent = "All Done!!"
+            descrip.textContent = "Your final score is: " + score;
+            descrip.setAttribute("style", "display: block");
+            formEl.setAttribute("style", "display: inline-block");
+            submitScoreBtn.setAttribute("style", "display: inline-block; margin-left: 10px");
+            submitScoreBtn.textContent = "Submit";
+            submitScoreBtn.setAttribute("style", "display: inline-block");
+            choiceListEl.setAttribute("style", "display: none");
         }
     }
     , 1000
-    );
-    console.log(count);
-    
-
-
-
+    );    
 }
+
+
 
 
 
 start.addEventListener("click", startQuiz);
 selectedChoice.addEventListener("click", verifyAnswer);
+submitScoreBtn.addEventListener("click", function(event){
+    event.preventDefault();
+    console.log("event triggered");
+
+    if(formEl.querySelector("input").value === null){
+        var error = document.createElement("h3");
+        error.textContent = "Please enter initials";
+        error.setAttribute("style", "color: red; font-weight: bold");
+        formEl.appendChild(error);
+    }
+    else{
+        if(error){
+            error.setAttribute("style", "display: none");
+        }
+        questionSpot.textContent = "High Scores"
+        descrip.setAttribute("style", "display: none");
+        formEl.setAttribute("style", "display: none");
+        submitScoreBtn.setAttribute("style", "display: none");
+        goBackBtn.textContent = "Go back";
+        clearScoreBtn.textContent = "Clear High Scores";
+        goBackBtn.setAttribute("style", "display: inline-block");
+        clearScoreBtn.setAttribute("style", "display: inline-block");
+    }    
+});

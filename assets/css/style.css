@@ -3,7 +3,7 @@ h1 {
 }
 
 .main-section{
-    text-align: left;
+    text-align: center;
     width: 50%;
     margin: 0 auto;
 }
@@ -38,4 +38,8 @@ h1 {
     color: gray;
     /*border-top: 1px solid gray;*/
     padding-top: 10px;
+}
+
+.invisible{
+    display: none;
 }
